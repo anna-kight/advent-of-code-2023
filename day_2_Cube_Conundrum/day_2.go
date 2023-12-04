@@ -54,6 +54,7 @@ func lineToGame(line string) (newGame game) {
 	splitLine := strings.Split(line, ":")
 	newGame.id, _ = strconv.Atoi(strings.Trim(splitLine[0], "Game "))
 	rounds := strings.Split(splitLine[1], ";")
+	newGame.power = getPower(rounds)
 	for i := 0; i < len(rounds); i++ {
 		colors := strings.Split(rounds[i], ",")
 		for j := 0; j < len(colors); j++ {
@@ -87,4 +88,32 @@ func validColorAmount(colorAmount string) bool {
 		return false
 	}
 	return true
+}
+
+func getPower(colors []string) int {
+	minRed, minGreen, minBlue := 0, 0, 0
+	for i := 0; i < len(colors); i++ {
+		colorAmounts := strings.Split(colors[i], ",")
+		for j := 0; j < len(colorAmounts); j++ {
+			split := strings.Split(colorAmounts[j], " ")
+			number, _ := strconv.Atoi(split[1])
+			switch color := split[2]; color {
+			case "red":
+				if minRed < number {
+					minRed = number
+				}
+			case "green":
+				if minGreen < number {
+					minGreen = number
+				}
+			case "blue":
+				if minBlue < number {
+					minBlue = number
+				}
+			default:
+				return 0
+			}
+		}
+	}
+	return minRed * minBlue * minGreen
 }
