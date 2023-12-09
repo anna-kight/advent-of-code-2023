@@ -87,10 +87,29 @@ func getType(cards string) int {
 	for _, char := range cards {
 		counts[char]++
 	}
+	numJs := 0
+	val, ok := counts['J']
+	if ok {
+		numJs = val
+		delete(counts, 'J')
+	}
+	if numJs == 5 {
+		return 7
+	}
 	var justCount []int
 	for _, count := range counts {
 		justCount = append(justCount, count)
 	}
+	max := 0
+	imax := -1
+	for i, count := range justCount {
+		if count > max {
+			max = count
+			imax = i
+		}
+	}
+	justCount[imax] = justCount[imax] + numJs
+
 	if slices.Contains(justCount, 5) {
 		return 7
 	} else if slices.Contains(justCount, 4) {
@@ -121,13 +140,13 @@ func getCardNums(cards string) (nums []int) {
 		} else if slice == "T" {
 			charNum = 10
 		} else if slice == "J" {
-			charNum = 11
+			charNum = 1
 		} else if slice == "Q" {
-			charNum = 12
+			charNum = 11
 		} else if slice == "K" {
-			charNum = 13
+			charNum = 12
 		} else if slice == "A" {
-			charNum = 14
+			charNum = 13
 		}
 		nums = append(nums, charNum)
 	}
