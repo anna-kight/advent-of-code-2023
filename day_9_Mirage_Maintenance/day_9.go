@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	file, fileScanner := getFileScanner("input.txt")
+	file, fileScanner := getFileScanner("example.txt")
 	var extrapolated []int
 	for fileScanner.Scan() {
 		line := fileScanner.Text()
@@ -56,9 +56,10 @@ func findExtrap(known []int) (extrap int) {
 		sequences = append(sequences, currentSeq)
 	}
 	for i := len(sequences) - 1; i >= 1; i-- {
-		sequences[i-1] = append(sequences[i-1], sequences[i][len(sequences[i])-1]+sequences[i-1][len(sequences[i-1])-1])
+		// sequences[i-1] = append(sequences[i-1], sequences[i][len(sequences[i])-1]+sequences[i-1][len(sequences[i-1])-1])
+		sequences[i-1] = append([]int{sequences[i-1][0] - sequences[i][0]}, sequences[i-1]...)
 	}
-	extrap = sequences[0][len(sequences[0])-1]
+	extrap = sequences[0][0]
 
 	return extrap
 }
