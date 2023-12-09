@@ -10,12 +10,13 @@ import (
 )
 
 func main() {
-	file, fileScanner := getFileScanner("input.txt")
+	file, fileScanner := getFileScanner("example.txt")
 	var time, distance []int
 	for fileScanner.Scan() {
 		line := fileScanner.Text()
 		values := strings.Split(line, ":")
 		digits := regexp.MustCompile("[0-9]+")
+		values[1] = strings.Replace(values[1], " ", "", -1)
 		if values[0] == "Time" {
 			numbers := digits.FindAllString(values[1], -1)
 			for i := 0; i < len(numbers); i++ {
@@ -44,12 +45,12 @@ func main() {
 		waysToWin = append(waysToWin, winCount)
 	}
 
-	product := waysToWin[0] * waysToWin[1]
-	for i := 2; i < len(waysToWin); i++ {
-		product = product * waysToWin[i]
-	}
+	// product := waysToWin[0] * waysToWin[1]
+	// for i := 2; i < len(waysToWin); i++ {
+	// 	product = product * waysToWin[i]
+	// }
 	fmt.Println("Ways to win: ", fmt.Sprint(waysToWin))
-	fmt.Println("The product of the number of ways to win in each race is: ", fmt.Sprint(product))
+	// fmt.Println("The product of the number of ways to win in each race is: ", fmt.Sprint(product))
 }
 
 func getFileScanner(fileName string) (*os.File, *bufio.Scanner) {
