@@ -76,7 +76,7 @@ func expand(u []Galaxy) (expanded []Galaxy) {
 		if !slices.Contains(rows, r) {
 			for i, g := range expanded {
 				if g.row > r {
-					expanded[i].row = expanded[i].row + 1
+					expanded[i].row = expanded[i].row + 999999
 				}
 			}
 		}
@@ -85,7 +85,7 @@ func expand(u []Galaxy) (expanded []Galaxy) {
 		if !slices.Contains(cols, c) {
 			for i, g := range expanded {
 				if g.col > c {
-					expanded[i].col = expanded[i].col + 1
+					expanded[i].col = expanded[i].col + 999999
 				}
 			}
 		}
